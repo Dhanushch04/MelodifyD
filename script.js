@@ -18,6 +18,12 @@ let songs = [
 
 let currentSongIndex = 0;
 
+// Function to update the song display correctly
+function updateSongInfo() {
+    let songPath = songs[currentSongIndex];
+    songName.textContent = songPath.substring(songPath.lastIndexOf("/") + 1, songPath.lastIndexOf("."));
+}
+
 // Function to play or pause the song correctly
 function playPause() {
     if (audio.paused || audio.ended) {
@@ -32,22 +38,27 @@ function playPause() {
 // Function to switch to the next song
 function nextSong() {
     currentSongIndex = (currentSongIndex + 1) % songs.length;
-    loadSong();
+    loadSong(true);
 }
 
 // Function to switch to the previous song
 function prevSong() {
     currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    loadSong();
+    loadSong(true);
 }
 
 // Function to load a song and play it
-function loadSong() {
+function loadSong(autoPlay = false) {
     audio.src = songs[currentSongIndex];
     audio.load();
-    audio.play();
-    playPauseBtn.textContent = "Pause"; // Ensure button updates correctly
-    songName.textContent = songs[currentSongIndex];
+    updateSongInfo();
+
+    if (autoPlay) {
+        audio.play();
+        playPauseBtn.textContent = "Pause";
+    } else {
+        playPauseBtn.textContent = "Play";
+    }
 }
 
 // Event listeners for button clicks
