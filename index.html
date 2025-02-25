@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melodifyd</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="player-container">
+        <h1 class="title">Melodifyd</h1>
+
+        <div class="music-player">
+            <div class="controls">
+                <button id="prevBtn" class="control-btn">Prev</button>
+                <button id="playPauseBtn" class="control-btn">Play</button>
+                <button id="nextBtn" class="control-btn">Next</button>
+                <button id="repeatBtn">Repeat: OFF</button>
+            </div>
+
+            <div class="song-info">
+                <input type="text" id="songSearch" placeholder="Search..." class="search-bar">
+                <p id="songName">No song selected</p>
+            </div>
+
+            <audio id="audio" src="music/song1.mp3" preload="auto"></audio>
+
+            <ul id="songList">
+                <li data-src="songs/Run.mp3"></li>
+                <li data-src="songs/Ria.mp3"></li>
+                <li data-src="songs/Kung Fu Kumaari.mp3"></li>
+                <li data-src="songs/Laychalo.mp3"></li>
+                <li data-src="songs/Bruce Lee.mp3"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="settings">
+        <button id="settingsBtn">Settings</button>
+        <div id="settingsPanel" class="settings-panel">
+            <label for="volume">Volume:</label>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+        </div>
+    </div>
+
+    <div class="star-background"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
