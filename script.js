@@ -11,7 +11,7 @@ let volumeControl = document.getElementById("volume");
 let songs = [
     "songs/Run.mp3",
     "songs/Ria.mp3",
-    "songs/Kung Fu Kumaari.mp3",
+    "songs/KungFuKumaari.mp3",
     "songs/Laychalo.mp3",
     "songs/Bruce Lee.mp3"
 ];
@@ -26,14 +26,20 @@ function updateSongInfo() {
 
 // Function to play or pause the song correctly
 function playPause() {
+    if (!audio.src || audio.src === "") {
+        console.log("No audio source loaded");
+        return;
+    }
+
     if (audio.paused || audio.ended) {
-        audio.play();
+        audio.play().catch(error => console.log("Playback error:", error)); // Catch any playback errors
         playPauseBtn.textContent = "Pause";
     } else {
         audio.pause();
         playPauseBtn.textContent = "Play";
     }
 }
+
 
 // Function to switch to the next song
 function nextSong() {
@@ -68,6 +74,7 @@ prevBtn.addEventListener("click", prevSong);
 
 // Reset button to "Play" when the song ends
 audio.addEventListener("ended", () => {
+    console.log("Audio ended event triggered"); // Debugging
     playPauseBtn.textContent = "Play";
 });
 
@@ -82,4 +89,17 @@ volumeControl.addEventListener("input", () => {
 });
 
 // Load the first song when the page loads
-loadSong();
+function loadSong(autoPlay = false) {
+    audio.src = songs[currentSongIndex];
+    audio.load();  // Ensure the new source is properly loaded
+
+    audio.onloadeddata = () => {  // Ensure audio is ready before playing
+        updateSongInfo();
+        if (autoPlay) {
+            audio.play();
+            playPauseBtn.textContent = "Pause";
+        } else {
+            playPauseBtn.textContent = "Play";
+        }
+    };
+}
